@@ -8,6 +8,11 @@
   </head>
   <body>
     <canvas id="canvas_is_cool" width="1000" height="1000"></canvas>
-
+    <button onclick="downloadCanvasContents()">Download Generated Sierpinski Triangle</button>
   </body>
 </html>
+
+<!-- This example was created from this tutorial:
+https://xtrp.io/blog/2020/11/20/generating-the-sierpinski-triangle-in-vanilla-javascript-with-html5-canvas/ -->
+
+<!-- I can have users input values for starting pos and sidelen for the Sierpinski Triangle function: that would serve as two controls on the page. Then those values inputted from the form in the html would be sent to the document.ready function and ultimately be passed into the correct function. Another value that could be inputted by the user is the depth, giving them the freedom to choose how much they want their fractal to repeat. Depth refers to the base case in the recursive function. Once Depth reaches 0, the function breaks out of it's loop. -->

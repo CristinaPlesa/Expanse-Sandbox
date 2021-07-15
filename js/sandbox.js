@@ -15,5 +15,31 @@ $(document).ready(function () {
     ctx.closePath();
     ctx.fill(); // fills the most recently closed path: this case being the triangle
   }
+  createTriangle([1, 100], 50);
+  
+  const createSierpinskiTriangle = (pos, sidelen, depth) => {
+    const innerTriangleSidelen = sidelen / 2; // side length of inner triangles is half the side length of the outer triangle
+    const innerTrianglePositions = [
+      pos,
+      [ pos[0] + innerTriangleSidelen, pos[1] ],
+      [ pos[0] + innerTriangleSidelen / 2, pos[1] - Math.sin(Math.PI/3) * innerTriangleSidelen ]
+    ]; // these positions are the same as what was used in the createTriangle function
+    if(depth == 0) {
+      innerTrianglePositions.forEach((trianglePosition) => {
+        createTriangle(trianglePosition, innerTriangleSidelen);
+      });
+    } else {
+      innerTrianglePositions.forEach((trianglePosition) => {
+        createSierpinskiTriangle(trianglePosition, innerTriangleSidelen, depth - 1);
+      });
+    }
+  }
+  createSierpinskiTriangle([0, 1000], 1000, 6);
 
-})
+  const downloadCanvasContent = () => {
+    const link = document.createElement('a'); // create link element
+    link.download = 'Sierpinski Triangle.png'; // set download attribute
+    link.href = c.toDataURL(); // set the link's URL to the data URL to be downloaded
+    link.click(); // click the element and the download on the user's browser
+  }
+});
