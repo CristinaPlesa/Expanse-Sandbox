@@ -36,7 +36,7 @@ $(document).ready(function () {
   // }
   // createSierpinskiTriangle([0, 1000], 1000, 6);
 
-  const createRectangle = (pos, sidelen) => {
+  const createSquare = (pos, sidelen) => {
     ctx.beginPath();
     ctx.moveTo(...pos);
 
@@ -46,8 +46,13 @@ $(document).ready(function () {
     ctx.closePath();
     ctx.fill();
   }
-  createRectangle([1, 100], 50);
+  createSquare([1, 100], 50);
 
+  const createPythagorasTree = (pos, sidelen, depth) => {
+    const smallerSquareSidelen = sidelen / (Math.sqrt(2) / 2);
+
+    
+  }
 
   const downloadCanvasContent = () => {
     const link = document.createElement('a'); // create link element
