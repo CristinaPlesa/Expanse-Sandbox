@@ -34,7 +34,7 @@ $(document).ready(function () {
       });
     }
   }
-  createSierpinskiTriangle([0, 1000], 1000, 6);
+  createSierpinskiTriangle([0, 2000], 1000, 6);
 
   
   const createSquare = (pos, sidelen) => {
@@ -49,15 +49,23 @@ $(document).ready(function () {
   }
   createSquare([100, 100], 50);
 
-  const createSquareWithMethod = (pos, sidelen) => {
-    ctx.rotate(45 * Math.PI / 180);
-    ctx.fillStyle = 'red';
+  const createSquareWithMethod = (pos, sidelen, color) => {
+    ctx.fillStyle = color;
     ctx.fillRect(pos[0], pos[1], sidelen, sidelen);
+
+    ctx.translate(pos[0], pos[1] - sidelen);
+    ctx.rotate(45 * Math.PI / 180);
+    ctx.translate(-pos[0], -pos[1]);
+
+    const newSidelen = sidelen * (Math.sqrt(2) / 2);
+    ctx.strokeRect(pos[0], pos[1], newSidelen, newSidelen);
+
   }
-  createSquareWithMethod([200, 100], 50);
+  createSquareWithMethod([500, 1000], 100, 'red');
+  // ^for user input of color to work, I would have to stringify their input? and pass it into color parameter?
 
   // for (let i = 0; i <= 4; i++) {
-  //   sidelen = sidelen / (Math.sqrt(2) / 2);
+  //   sidelen = sidelen * (Math.sqrt(2) / 2);
   //   ctx.fillRect(pos[0] * or plus?)
   //   // change it's starting position/ position will be different for new squares
   //   // rotate it/ rotate will be the same value for both new squares
