@@ -55,19 +55,24 @@ $(document).ready(function () {
   }
   createSquareWithMethod([500, 1000], 100, 'red');
 
-  const createPythagorasTree = (pos, sidelen, iteration) => {
-      const newSidelen = sidelen * (Math.sqrt(2) / 2);
-
-      const smallerSquarePositions = [
-        createSquareWithMethod({})
-      ]
+  const createPythagorasTree = (pos, sidelen, depth) => {
+    const iteration = 0;
+    const newSidelen = sidelen * (Math.sqrt(2) / 2);
+    
+    if(iteration === depth) {
+      createSquareWithMethod(pos, sidelen);
+    } else {
+      ctx.translate(pos[0], pos[1] - sidelen);
+      ctx.rotate(45 * Math.PI / 180);
+      ctx.translate(-pos[0], -pos[1]);
+      ctx.strokeRect(pos[0], pos[1], newSidelen, newSidelen),
+      
+      ctx.strokeRect(pos[0] + sidelen, pos[1], newSidelen, newSidelen)
+      iteration += 1;
+      createPythagorasTree(pos, sidelen, depth)
+    }
   }
-  // for (i = 0; i <= 3; i++) {
-  //   ctx.translate(pos[0], pos[1] - sidelen);
-  //   ctx.rotate(45 * Math.PI / 180);
-  //   ctx.translate(-pos[0], -pos[1]);
-
-  //   ctx.strokeRect(pos[0], pos[1], newSidelen, newSidelen);
+  createPythagorasTree([500, 1000], 100, 3);
 
   // }
   // ^for user input of color to work, I would have to stringify their input? and pass it into color parameter?
