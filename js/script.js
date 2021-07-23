@@ -52,16 +52,24 @@ $(document).ready(function () {
   const createSquareWithMethod = (pos, sidelen, color) => {
     ctx.fillStyle = color;
     ctx.fillRect(pos[0], pos[1], sidelen, sidelen);
-
-    ctx.translate(pos[0], pos[1] - sidelen);
-    ctx.rotate(45 * Math.PI / 180);
-    ctx.translate(-pos[0], -pos[1]);
-
-    const newSidelen = sidelen * (Math.sqrt(2) / 2);
-    ctx.strokeRect(pos[0], pos[1], newSidelen, newSidelen);
-
   }
   createSquareWithMethod([500, 1000], 100, 'red');
+
+  const createPythagorasTree = (pos, sidelen, iteration) => {
+      const newSidelen = sidelen * (Math.sqrt(2) / 2);
+
+      const smallerSquarePositions = [
+        createSquareWithMethod({})
+      ]
+  }
+  // for (i = 0; i <= 3; i++) {
+  //   ctx.translate(pos[0], pos[1] - sidelen);
+  //   ctx.rotate(45 * Math.PI / 180);
+  //   ctx.translate(-pos[0], -pos[1]);
+
+  //   ctx.strokeRect(pos[0], pos[1], newSidelen, newSidelen);
+
+  // }
   // ^for user input of color to work, I would have to stringify their input? and pass it into color parameter?
 
   // for (let i = 0; i <= 4; i++) {
