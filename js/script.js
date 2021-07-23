@@ -36,25 +36,53 @@ $(document).ready(function () {
   }
   createSierpinskiTriangle([0, 1000], 1000, 6);
 
+  
   const createSquare = (pos, sidelen) => {
     ctx.beginPath();
     ctx.moveTo(...pos);
 
     ctx.lineTo(pos[0], pos[1] - sidelen);
     ctx.lineTo(pos[0] + sidelen, pos[1] - sidelen);
-    ctx.lineTo(pos[0] + sidelen, pos[1])
+    ctx.lineTo(pos[0] + sidelen, pos[1]);
     ctx.closePath();
     ctx.fill();
   }
   createSquare([100, 100], 50);
 
-  const createPythagorasTree = (pos, sidelen, depth) => {
-    const smallerSquareSidelen = sidelen / (Math.sqrt(2) / 2);
-
-    const leftSquare = [
-      
-    ]
+  const createSquareWithMethod = (pos, sidelen) => {
+    ctx.rotate(45 * Math.PI / 180);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(pos[0], pos[1], sidelen, sidelen);
   }
+  createSquareWithMethod([200, 100], 50);
+
+  // for (let i = 0; i <= 4; i++) {
+  //   sidelen = sidelen / (Math.sqrt(2) / 2);
+  //   ctx.fillRect(pos[0] * or plus?)
+  //   // change it's starting position/ position will be different for new squares
+  //   // rotate it/ rotate will be the same value for both new squares
+  // }
+
+
+  // const createPythagorasTree = (pos, sidelen, depth) => {
+  //   const smallerSquareSidelen = sidelen / (Math.sqrt(2) / 2);
+
+  //   const leftSquare = [
+
+  //   ]
+  // }
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
+  // Code to create Rectangle shapes (can replace my path code in createSquare function) :
+  //    rect(x, y, width, height)
+  //    Draws a rectangle whose top-left corner is specified by (x, y) with the specified width and  height
+  //   fillRect(x, y, width, height)
+  //   Draws a filled rectangle.
+  //   strokeRect(x, y, width, height)
+  //   Draws a rectangular outline.
+  //   clearRect(x, y, width, height)
+  //   Clears the specified rectangular area, making it fully transparent.
+
 
   const downloadCanvasContent = () => {
     const link = document.createElement('a'); // create link element
