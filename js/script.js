@@ -56,20 +56,20 @@ $(document).ready(function () {
       [x, y - sidelen / 2]
     ]
     ctx.save();
-    createSquareWithMethod(pos, sidelen);
+    createSquareWithMethod(x, y, sidelen);
     ctx.restore();
     ctx.save();
-    ctx.translate(pos[0], pos[1] - sidelen / 2);
+    ctx.translate(x, y - sidelen / 2);
     ctx.rotate(45 * Math.PI / 180);
     ctx.translate(newSquarePositions[0][0], newSquarePositions[0][1]);
-    createPythagorasTree(pos, newSidelen, depth, iteration + 1);
-    console.log("h" + pos)
+    createPythagorasTree(x, y, newSidelen, depth, iteration + 1);
+    console.log("h" + x + y)
     ctx.restore();
     ctx.save();
-    ctx.translate(pos[0] + sidelen, pos[1] - sidelen / 2);
+    ctx.translate(x + sidelen, y - sidelen / 2);
     ctx.rotate(-45 * Math.PI / 180);
     ctx.translate(newSquarePositions[1][0], newSquarePositions[1][1]);
-    createPythagorasTree(pos, newSidelen, depth, iteration + 1);
+    createPythagorasTree(x, y, newSidelen, depth, iteration + 1);
     console.log("t" + y + x)
     ctx.restore();
     }
