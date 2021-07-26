@@ -51,33 +51,34 @@ $(document).ready(function () {
   const createPythagorasTree = (pos, sidelen, depth, iteration = 0) => {
     const newSidelen = sidelen * (Math.sqrt(2) / 2);
 
-    const newSquarePositions = [
-      [pos[0] - (sidelen / 2), pos[1] - newSidelen],
-      [pos[0] + sidelen, pos[1] - newSidelen]
-    ]
+    // const newSquarePositions = [
+    //   [pos[0], (pos[1] - sidelen / 2)],
+    //   [pos[0] - sidelen/2, pos[1]]
+    // ]
 
     if(iteration === depth) {
-      createSquareWithMethod(pos, newSidelen);
+      createSquareWithMethod(pos, sidelen);
       // ctx.strokeRect(pos[0], pos[1], sidelen, sidelen);
     } else {
-      for (let i = 0; i < newSquarePositions.length; i++) {
-        if(i === 0) {
-          ctx.resetTransform();
-          ctx.translate(newSquarePositions[0][0], newSquarePositions[0][1]);
+      // for (let i = 0; i < newSquarePositions.length; i++) {
+      //   if(i === 0) {
+          ctx.save();
+          ctx.translate(pos[0], pos[1] - sidelen / 2);
           ctx.rotate(45 * Math.PI / 180);
-          ctx.translate(-newSquarePositions[0][0], -newSquarePositions[0][1]);
-          createPythagorasTree(newSquarePositions[0], sidelen, depth, iteration + 1);
-        } else {
-          ctx.resetTransform();
-          ctx.translate(newSquarePositions[1][0], newSquarePositions[1][1]);
-          ctx.rotate(45 * Math.PI / 180);
-          ctx.translate(-newSquarePositions[1][0], -newSquarePositions[1][1]);
-          createPythagorasTree(newSquarePositions[1], sidelen, depth, iteration + 1);
-        }
+          ctx.translate(pos[0] - sidelen/2, pos[1]);
+          createPythagorasTree(pos, newSidelen, depth, iteration + 1);
+          ctx.restore();
+        // } else {
+          ctx.save();
+          ctx.translate(pos[0] + sidelen, pos[1] - sidelen / 2);
+          ctx.rotate(-45 * Math.PI / 180);
+          ctx.translate(pos[0], pos[1] - sidelen / 2);
+          createPythagorasTree(pos, newSidelen, depth, iteration + 1);
+          ctx.restore();
+        // }
       }
     }
-  }
-  // createPythagorasTree([500, 1000], 100, 1);
+  createPythagorasTree([500, 1000], 100, 1);
 
   // }
   // ^for user input of color to work, I would have to stringify their input? and pass it into color parameter?
@@ -135,6 +136,7 @@ $(document).ready(function () {
   // ^this example is a video tutorial:
   // https://www.youtube.com/watch?v=wBAtHDdaZ2Y
 
+ 
   const downloadCanvasContent = () => {
     const link = document.createElement('a'); // create link element
     link.download = 'Sierpinski Triangle.png'; // set download attribute
