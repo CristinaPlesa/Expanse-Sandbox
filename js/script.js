@@ -44,41 +44,36 @@ $(document).ready(function () {
 
   const createSquareWithMethod = (pos, sidelen, color) => {
     ctx.fillStyle = color;
-    ctx.fillRect(pos[0], pos[1], sidelen, sidelen);
+    ctx.strokeRect(pos[0], pos[1], sidelen, sidelen);
   }
-  createSquareWithMethod([500, 1000], 100, 'red');
+  // createSquareWithMethod([500, 1000], 100, 'red');
 
   const createPythagorasTree = (pos, sidelen, depth, iteration = 0) => {
     const newSidelen = sidelen * (Math.sqrt(2) / 2);
-
-    // const newSquarePositions = [
-    //   [pos[0], (pos[1] - sidelen / 2)],
-    //   [pos[0] - sidelen/2, pos[1]]
-    // ]
-
-    if(iteration === depth) {
-      createSquareWithMethod(pos, sidelen);
-      // ctx.strokeRect(pos[0], pos[1], sidelen, sidelen);
-    } else {
-      // for (let i = 0; i < newSquarePositions.length; i++) {
-      //   if(i === 0) {
-          ctx.save();
-          ctx.translate(pos[0], pos[1] - sidelen / 2);
-          ctx.rotate(45 * Math.PI / 180);
-          ctx.translate(pos[0] - sidelen/2, pos[1]);
-          createPythagorasTree(pos, newSidelen, depth, iteration + 1);
-          ctx.restore();
-        // } else {
-          ctx.save();
-          ctx.translate(pos[0] + sidelen, pos[1] - sidelen / 2);
-          ctx.rotate(-45 * Math.PI / 180);
-          ctx.translate(pos[0], pos[1] - sidelen / 2);
-          createPythagorasTree(pos, newSidelen, depth, iteration + 1);
-          ctx.restore();
-        // }
-      }
+    const newSquarePositions = [
+      [pos[0] - sidelen / 2, pos[1]],
+      [pos[0], pos[1] - sidelen / 2]
+    ]
+    if(iteration === depth) 
+    return;
+    ctx.save();
+    createSquareWithMethod(pos, sidelen);
+    ctx.restore();
+    ctx.save();
+    ctx.translate(pos[0], pos[1] - sidelen / 2);
+    ctx.rotate(45 * Math.PI / 180);
+    ctx.translate(newSquarePositions[0][0], newSquarePositions[0][1]);
+    createPythagorasTree(newSquarePositions[0], newSidelen, depth, iteration + 1);
+    ctx.restore();
+    ctx.save();
+    ctx.translate(pos[0] + sidelen, pos[1] - sidelen / 2);
+    ctx.rotate(-45 * Math.PI / 180);
+    ctx.translate(newSquarePositions[1][0], newSquarePositions[1][1]);
+    createPythagorasTree(newSquarePositions[1], newSidelen, depth, iteration + 1);
+    ctx.restore();
     }
-  createPythagorasTree([500, 1000], 100, 1);
+  createPythagorasTree([500, 1000], 100, 2);
+  console.log(createPythagorasTree());
 
   // }
   // ^for user input of color to work, I would have to stringify their input? and pass it into color parameter?
