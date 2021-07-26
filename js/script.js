@@ -77,7 +77,7 @@ $(document).ready(function () {
       }
     }
   }
-  createPythagorasTree([500, 1000], 100, 1);
+  // createPythagorasTree([500, 1000], 100, 1);
 
   // }
   // ^for user input of color to work, I would have to stringify their input? and pass it into color parameter?
@@ -109,6 +109,31 @@ $(document).ready(function () {
   //   clearRect(x, y, width, height)
   //   Clears the specified rectangular area, making it fully transparent.
 
+  const drawTree = (startX, startY, len, angle, branchWidth, color1, color2) => {
+    ctx.beginPath();
+    ctx.save();
+    ctx.strokeStyle = color1;
+    ctx.fillStyle = color2;
+    ctx.lineWidth = branchWidth;
+    ctx.translate(startX, startY);
+    ctx.rotate(angle * Math.PI/180);
+    ctx.moveTo(0,0);
+    ctx.lineTo(0, -len);
+    ctx.stroke();
+
+    if (len < 15) {
+      ctx.restore();
+      return;
+    }
+
+    drawTree(0, -len, len * 0.75, angle + 7, branchWidth);
+    drawTree(0, -len, len * 0.75, angle - 20, branchWidth);
+
+    ctx.restore();
+  }
+  drawTree(1500, 1950, 180, 0, 5, 'black', 'green');
+  // ^this example is a video tutorial:
+  // https://www.youtube.com/watch?v=wBAtHDdaZ2Y
 
   const downloadCanvasContent = () => {
     const link = document.createElement('a'); // create link element
