@@ -37,25 +37,24 @@ $(document).ready(function () {
   createSierpinskiTriangle([0, 2000], 1000, 6);
 
   
-  const createSquare = (pos, sidelen) => {
-   ctx.fillRect(pos[0], pos[1], sidelen, sidelen);
+  const createSquare = (x, y, sidelen) => {
+   ctx.fillRect(x, y, sidelen, sidelen);
   }
-  createSquare([100, 50], 50);
+  createSquare(100, 50, 50);
 
-  const createSquareWithMethod = (pos, sidelen, color) => {
+  const createSquareWithMethod = (x, y, sidelen, color) => {
     ctx.fillStyle = color;
-    ctx.strokeRect(pos[0], pos[1], sidelen, sidelen);
+    ctx.strokeRect(x, y, sidelen, sidelen);
   }
-  // createSquareWithMethod([500, 1000], 100, 'red');
+  createSquareWithMethod([500, 1000], 100, 'red');
 
-  const createPythagorasTree = (pos, sidelen, depth, iteration = 0) => {
+  const createPythagorasTree = (x, y, sidelen, depth, iteration = 0) => {
+    if(iteration === depth) return;
     const newSidelen = sidelen * (Math.sqrt(2) / 2);
     const newSquarePositions = [
-      [pos[0] - sidelen / 2, pos[1]],
-      [pos[0], pos[1] - sidelen / 2]
+      [x - sidelen / 2, y],
+      [x, y - sidelen / 2]
     ]
-    if(iteration === depth) 
-    return;
     ctx.save();
     createSquareWithMethod(pos, sidelen);
     ctx.restore();
@@ -63,17 +62,18 @@ $(document).ready(function () {
     ctx.translate(pos[0], pos[1] - sidelen / 2);
     ctx.rotate(45 * Math.PI / 180);
     ctx.translate(newSquarePositions[0][0], newSquarePositions[0][1]);
-    createPythagorasTree(newSquarePositions[0], newSidelen, depth, iteration + 1);
+    createPythagorasTree(pos, newSidelen, depth, iteration + 1);
+    console.log("h" + pos)
     ctx.restore();
     ctx.save();
     ctx.translate(pos[0] + sidelen, pos[1] - sidelen / 2);
     ctx.rotate(-45 * Math.PI / 180);
     ctx.translate(newSquarePositions[1][0], newSquarePositions[1][1]);
-    createPythagorasTree(newSquarePositions[1], newSidelen, depth, iteration + 1);
+    createPythagorasTree(pos, newSidelen, depth, iteration + 1);
+    console.log("t" + y + x)
     ctx.restore();
     }
-  createPythagorasTree([500, 1000], 100, 2);
-  console.log(createPythagorasTree());
+  createPythagorasTree(500, 1000, 100, 2);
 
   // }
   // ^for user input of color to work, I would have to stringify their input? and pass it into color parameter?
