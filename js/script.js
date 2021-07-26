@@ -42,57 +42,73 @@ $(document).ready(function () {
   }
   createSquare(100, 50, 50);
 
-  const createSquareWithMethod = (x, y, sidelen, color) => {
-    ctx.fillStyle = color;
-    ctx.strokeRect(x, y, sidelen, sidelen);
+  const drawPythagorasTree = (side, angle, iterations, color) => {
+    if (iterations < 1) return
+    const sideLeft  = side * Math.cos(angle)
+    const sideRight = side * Math.sin(angle)
+    ctx.save()
+    ctx.fillStyle = color(iterations)
+    ctx.fillRect(-side / 2, 0, side, -side)
+    ctx.restore()
+    ctx.save()
+    ctx.translate(-side / 2, -side)
+    ctx.rotate(-angle)
+    ctx.translate(sideLeft / 2, 0)
+    drawPythagorasTree(sideLeft, angle, iterations - 1, color)
+    ctx.restore()
+    ctx.save()
+    ctx.translate(side / 2, -side)
+    ctx.rotate(Math.PI / 2 - angle)
+    ctx.translate(-sideRight / 2, 0)
+    drawPythagorasTree(sideRight, angle, iterations - 1, color)
+    ctx.restore()
   }
-  createSquareWithMethod([500, 1000], 100, 'red');
+  
+  ctx.save()
+  ctx.translate(500, 1000)
+  drawPythagorasTree(150, Math.PI*9/32, 10, (i) => `hsl(${i*10+180}, 100%, 50%`)
+  ctx.restore()
+  // ^this example comes from another coder, works cleanly to render
+  // also this resource was used to render the color:
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
 
-  const createPythagorasTree = (x, y, sidelen, depth, iteration = 0) => {
-    if(iteration === depth) return;
-    const newSidelen = sidelen * (Math.sqrt(2) / 2);
-    const newSquarePositions = [
-      [x - sidelen / 2, y],
-      [x, y - sidelen / 2]
-    ]
-    ctx.save();
-    createSquareWithMethod(x, y, sidelen);
-    ctx.restore();
-    ctx.save();
-    ctx.translate(x, y - sidelen / 2);
-    ctx.rotate(45 * Math.PI / 180);
-    ctx.translate(newSquarePositions[0][0], newSquarePositions[0][1]);
-    createPythagorasTree(x, y, newSidelen, depth, iteration + 1);
-    console.log("h" + x + y)
-    ctx.restore();
-    ctx.save();
-    ctx.translate(x + sidelen, y - sidelen / 2);
-    ctx.rotate(-45 * Math.PI / 180);
-    ctx.translate(newSquarePositions[1][0], newSquarePositions[1][1]);
-    createPythagorasTree(x, y, newSidelen, depth, iteration + 1);
-    console.log("t" + y + x)
-    ctx.restore();
-    }
-  createPythagorasTree(500, 1000, 100, 2);
+
+  // const createSquareWithMethod = (x, y, sidelen, color) => {
+  //   ctx.fillStyle = color;
+  //   ctx.strokeRect(x, y, sidelen, sidelen);
+  // }
+  // createSquareWithMethod([500, 1000], 100, 'red');
+
+  // const createPythagorasTree = (x, y, sidelen, depth, iteration = 0) => {
+  //   if(iteration === depth) return;
+  //   const newSidelen = sidelen * (Math.sqrt(2) / 2);
+  //   const newSquarePositions = [
+  //     [x - sidelen / 2, y],
+  //     [x, y - sidelen / 2]
+  //   ]
+  //   ctx.save();
+  //   createSquareWithMethod(x, y, sidelen);
+  //   ctx.restore();
+  //   ctx.save();
+  //   ctx.translate(x, y - sidelen / 2);
+  //   ctx.rotate(45 * Math.PI / 180);
+  //   ctx.translate(newSquarePositions[0][0], newSquarePositions[0][1]);
+  //   createPythagorasTree(x, y, newSidelen, depth, iteration + 1);
+  //   console.log("h" + x + y)
+  //   ctx.restore();
+  //   ctx.save();
+  //   ctx.translate(x + sidelen, y - sidelen / 2);
+  //   ctx.rotate(-45 * Math.PI / 180);
+  //   ctx.translate(newSquarePositions[1][0], newSquarePositions[1][1]);
+  //   createPythagorasTree(x, y, newSidelen, depth, iteration + 1);
+  //   console.log("t" + y + x)
+  //   ctx.restore();
+  //   }
+  // createPythagorasTree(500, 1000, 100, 2);
 
   // }
   // ^for user input of color to work, I would have to stringify their input? and pass it into color parameter?
 
-  // for (let i = 0; i <= 4; i++) {
-  //   sidelen = sidelen * (Math.sqrt(2) / 2);
-  //   ctx.fillRect(pos[0] * or plus?)
-  //   // change it's starting position/ position will be different for new squares
-  //   // rotate it/ rotate will be the same value for both new squares
-  // }
-
-
-  // const createPythagorasTree = (pos, sidelen, depth) => {
-  //   const smallerSquareSidelen = sidelen / (Math.sqrt(2) / 2);
-
-  //   const leftSquare = [
-
-  //   ]
-  // }
 
   // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes
   // Code to create Rectangle shapes (can replace my path code in createSquare function) :
